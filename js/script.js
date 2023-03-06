@@ -32,10 +32,24 @@
 
 const playButtonEl = document.getElementById("play-button");
 let difficultyEl = document.getElementById("difficulty-select");
+let endContainer = document.getElementById("end-container");
+let endMessage = document.createElement("h2");
+endContainer.append(endMessage);
+let playAgainButtonEl = document.getElementById("play-again-button")
+
+
+
+let gameGenerated = false;
+let endGame = false;
+let contatore = 0;
+
+// const savedBombs = generateBombs();
 
 playButtonEl.addEventListener("click", function(){
-    generateGame();
-    generateBombs();
+    if (!gameGenerated) {
+        generateGame();
+        gameGenerated = true;
+    }
 });
 
 
@@ -47,9 +61,13 @@ playButtonEl.addEventListener("click", function(){
  * @returns {gameContainer}
  */
 function generateGame (gameContainer, box) {
+    let bombeGenerate = [];
 
     if (difficultyEl.value == "Facile"){
-    for(let i = 1; i <= 100; i++) {
+       
+        bombeGenerate = generateBombs(100);
+        console.log(bombeGenerate)
+     for(let i = 1; i <= 100; i++) {
         gameContainer = document.getElementById("game-container");
         gameContainer.classList.add("game-container")
 
@@ -61,16 +79,31 @@ function generateGame (gameContainer, box) {
         box.innerText = cellNumber; 
 
         box.addEventListener("click", function() {  
-            if (!bombsActive.includes(cellNumber)) {
-                console.log("E'una bomba!")
-            } else {
+
+            if(endGame) {
+                return;
+            };
+
+            if (bombeGenerate.includes(cellNumber)){
+                console.log ( " BOMBA - hai perso ")
+                this.style.backgroundColor = "red"
+                endMessage.innerText = "Hai perso! Il tuo punteggio è: " + contatore
+                playAgainButtonEl.style.display = ("block")
+                endGame = true;
+                
+            } else {            
             box.style.backgroundColor = "#7fffd4";
             console.log("Il numero di questa casella è: " + box.innerText )
+            contatore++;
+           
+            
         }});
          
         }
         
     } else if (difficultyEl.value == "Medio") {
+        bombeGenerate = generateBombs(81);
+        console.log(bombeGenerate)
         for(let i = 1; i <= 81; i++) {
             gameContainer = document.getElementById("game-container");
             gameContainer.classList.add("game-container")
@@ -85,13 +118,32 @@ function generateGame (gameContainer, box) {
             box.innerText = cellNumber;  
     
             box.addEventListener("click", function() {  
-                box.style.backgroundColor = "#7fffd4";
-                console.log("Il numero di questa casella è: " + box.innerText )
-         });
+
+                if(endGame) {
+                    return;
+                };
+               
+            if (bombeGenerate.includes(cellNumber)){
+                console.log ( " BOMBA - hai perso ")
+                this.style.backgroundColor = "red"
+                endMessage.innerText = "Hai perso! Il tuo punteggio è: " + contatore
+                playAgainButtonEl.style.display = ("block")
+                endGame = true;
+
+                
+            } else {            
+            box.style.backgroundColor = "#7fffd4";
+            console.log("Il numero di questa casella è: " + box.innerText )
+            contatore++;
+           
+        }});
              
             }
                 
     } else if (difficultyEl.value == "Difficile") {
+        bombeGenerate = generateBombs(49);
+        console.log(bombeGenerate)
+
         for(let i = 1; i <= 49; i++) {
             gameContainer = document.getElementById("game-container");
             gameContainer.classList.add("game-container")
@@ -104,46 +156,61 @@ function generateGame (gameContainer, box) {
             
             const cellNumber = i;
             box.innerText = cellNumber;  
-
             box.addEventListener("click", function() {  
-                box.style.backgroundColor = "#7fffd4";
-                console.log("Il numero di questa casella è: " + box.innerText )
 
-         });
+                if(endGame) {
+                    return;
+                };
+               
+            if (bombeGenerate.includes(cellNumber)){
+                console.log ( " BOMBA - hai perso ")
+                this.style.backgroundColor = "red"
+                endMessage.innerText = "Hai perso! Il tuo punteggio è: " + contatore
+                playAgainButtonEl.style.display = ("block")
+                endGame = true;
+                
+              
+
+                
+            } else {            
+            box.style.backgroundColor = "#7fffd4";
+            console.log("Il numero di questa casella è: " + box.innerText )
+            contatore++;
+            
+        }});
              
             }
             return gameContainer     
         
+
+            
     }}
 
 
-    function generateBombs(difficulty) {
-        let maxCellNumber = 100;
-        if (difficulty == "Facile"){
-          maxCellNumber = 100;
-        } else if (difficulty == "Medio") {
-          maxCellNumber = 81;
-        } else if (difficulty == "Difficile") {
-          maxCellNumber = 49;
-        }
+
+    playAgainButtonEl.addEventListener("click", function(){
+        window.location.reload();
+    })
+
+
+
+    function generateBombs(bombe) {
         const bombs = [];
         while (bombs.length < 16) {
-         let newBomb = Math.floor(Math.random() * maxCellNumber + 1);
+         let newBomb = Math.floor(Math.random() * bombe + 1);
          if (!bombs.includes(newBomb)) {
             bombs.push(newBomb);
          }
         }
-        console.log(bombs)
         return bombs;
     }
 
-    // function looseGame() {
-    //     alert("Hai perso la partita!");
-    // }
 
 
 
    
+
+
     
 
 

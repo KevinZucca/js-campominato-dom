@@ -1,5 +1,9 @@
+#main-container {
+    position: relative;
+}
 
-#main-container #play-button {
+
+#main-container .blue-button {
     width: 150px;
     padding: 10px;
     margin: 20px auto;
@@ -36,3 +40,14 @@
     height: calc(60px * 7);
     margin: auto;
 }
+
+
+#end-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#play-again-button {
+    display: none;
+}
+
