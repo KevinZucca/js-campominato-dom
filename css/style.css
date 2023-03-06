@@ -1,0 +1,38 @@
+
+#main-container #play-button {
+    width: 150px;
+    padding: 10px;
+    margin: 20px auto;
+    border-radius: 5px;
+    color: white;
+    background-color: #2d4172;
+}
+
+#main-container #difficulty-select {
+    width: 250px;
+}
+
+.box {
+    border: 1px solid black;
+    height: 60px;
+    width: 60px;
+}
+
+.game-container {
+    width: calc(60px * 10);
+    height: calc(60px * 10);
+    margin: auto;
+}
+
+
+.game-container.game-container-medium {
+    width: calc(60px * 9);
+    height: calc(60px * 9);
+    margin: auto;
+}
+
+.game-container.game-container-hard {
+    width: calc(60px * 7);
+    height: calc(60px * 7);
+    margin: auto;
+}
